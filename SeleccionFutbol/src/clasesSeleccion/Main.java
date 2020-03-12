@@ -11,11 +11,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			File file = new File(
-					"src\\clasesSeleccion\\infoSeleccionFutbol.txt");
+			File file = new File("src\\clasesSeleccion\\infoSeleccionFutbol.txt");
 			FileReader fileReader = new FileReader(file);
 			BufferedReader buffReader = new BufferedReader(fileReader);
+			
 			ArrayList<SeleccionFutbol> lstSeleccion = new ArrayList<SeleccionFutbol>();
+			ArrayList<Aguatero> lstAguatero = new ArrayList<Aguatero>();
+			
 			String linea = "";
 			int contId = 1;
 
@@ -32,13 +34,19 @@ public class Main {
 					seleccion.setIdFederacion(Integer.parseInt(info[4]));
 					lstSeleccion.add(seleccion);
 					contId++;
-				} else {
-					if (info[0].equals("F")) {
+				} else if (info[0].equals("F")) {
 						lstSeleccion.add(new Futbolista(contId, info[1], info[2], Integer.parseInt(info[3]), info[4],
 								Integer.parseInt(info[5])));
 						contId++;
 					}
-				}
+				}else {
+          if(info[0].equals("AG")) {
+					lstAguatero.add(new Aguatero(contId, info[1], info[2], Integer.parseInt(info[3]), 
+							Integer.parseInt(info[4]), Integer.parseInt(info[5]), Integer.parseInt(info[6]), Integer.parseInt(info[7])));
+				      }
+        }
+				lstSeleccion.add(seleccion);
+				contId++;
 			}
 			
 			for (int i = 0; i < lstSeleccion.size(); i++) {
@@ -72,10 +80,13 @@ public class Main {
 					}
 				}
 			}
+			Aguatero.IterarListaAguateros(lstAguatero);
+				
 		} catch (Exception e) {
 			System.out.println("Error:" + e.getMessage());
 		}
 
 	}
+	
 
 }
